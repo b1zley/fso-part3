@@ -1,7 +1,25 @@
 const express = require('express')
+var morgan = require('morgan')
+
 const app = express()
 
+
+
+
+morgan.token('json-data', function (req, res) {
+    const toReturn = JSON.stringify(req.body)
+    return toReturn
+})
+
+
 app.use(express.json())
+
+
+app.use(morgan(':method :url :status :res[content-length] - :response-time ms :json-data', {
+    skip: function (req, res) { return req.method !== 'POST' }
+  }))
+
+
 
 persons = [
     {
@@ -35,7 +53,7 @@ app.get('/', (request, response) => {
 
 
 app.get('/api/persons', (request, response) => {
-    
+
     response.json(persons)
 
 })
@@ -104,7 +122,7 @@ app.post('/api/persons', (request, response) => {
             })
         )
     } else if (persons.find(person => person.name === nameToAdd)) {
-        return(
+        return (
             response.status(400).json({
                 error: 'person already added'
             })
@@ -119,7 +137,7 @@ app.post('/api/persons', (request, response) => {
             "id": idToAdd,
             "name": nameToAdd,
             "number": numberToAdd
-            
+
         }
         persons = persons.concat(personToAdd)
 
