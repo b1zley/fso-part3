@@ -1,0 +1,27 @@
+POST http://localhost:3001/api/persons
+content-type: application/json
+
+    {
+        "number": "028"
+    }
+
+###
+POST http://localhost:3001/api/persons
+content-type: application/json
+
+    {
+        "name": "test"
+    }
+
+
+###
+POST http://localhost:3001/api/persons
+content-type: application/json
+
+    {
+        "name": "Arto Hellas",
+        "number": "028"
+    }
+
+
+    
