@@ -1,0 +1,11 @@
+GET https://bizley-phonebook.fly.dev/api/persons
+###
+POST https://bizley-phonebook.fly.dev/api/persons
+content-type: application/json
+
+{
+    "name": "test",
+    "number": "028"
+}
+###
+DELETE https://bizley-phonebook.fly.dev/api/persons/2

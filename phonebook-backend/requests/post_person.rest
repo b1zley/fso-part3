@@ -5,3 +5,12 @@ content-type: application/json
     "name": "test",
     "number": "028"
 }
+
+###
+POST https://bizley-phonebook.fly.dev/api/persons
+content-type: application/json
+
+{
+    "name": "test",
+    "number": "028"
+}

@@ -1,10 +1,11 @@
 const express = require('express')
 var morgan = require('morgan')
+const cors = require('cors')
 
 const app = express()
 
 
-
+app.use(cors())
 
 morgan.token('json-data', function (req, res) {
     const toReturn = JSON.stringify(req.body)
@@ -17,8 +18,11 @@ app.use(express.json())
 
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms :json-data', {
     skip: function (req, res) { return req.method !== 'POST' }
-  }))
+}))
 
+app.use(morgan('tiny'))
+
+app.use(express.static('build'))
 
 
 persons = [
@@ -152,7 +156,7 @@ app.post('/api/persons', (request, response) => {
 
 
 
-const PORT = 3001
+const PORT = process.env.PORT || 3001
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`)
 })
