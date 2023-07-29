@@ -1,4 +1,12 @@
-DELETE http://localhost:3001/api/persons/3
+DELETE http://localhost:3001/api/persons/64c55cf14a5d46db5b719f41
+###
+GET http://localhost:3001/api/persons/64c55cf14a5d46db5b719f41
+
+
+
+
+
+
 
 ###
 DELETE https://bizley-phonebook.fly.dev/api/persons/2

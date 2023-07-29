@@ -95,10 +95,15 @@ const AddANewPerson = (props) => {
                         setTimeout(() => {
                             props.setMessage(null)
                         }, 5000)
+                        props.setToSearch('')
+                        
 
                     })
                     .catch(error => {
                         props.setMessage(`Information of ${newName} already removed`)
+                        setTimeout(() => {
+                            props.setMessage(null)
+                        }, 5000)
                         console.log(error)
                         const updatedPersonsList = 
                             props.persons

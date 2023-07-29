@@ -1,4 +1,9 @@
 GET http://localhost:3001/api/persons/
+###
+GET http://localhost:3001/api/persons/1
+###
+GET http://localhost:3001/api/asdasdasd
+
 
 ###
 GET https://bizley-phonebook.fly.dev/api/persons
