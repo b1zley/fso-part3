@@ -2,10 +2,10 @@ GET http://localhost:3001/api/persons/
 ###
 GET http://localhost:3001/api/persons/64c55cf5a1525159aec4819a
 ###
-PUT http://localhost:3001/api/persons/64c55cf5a1525159aec4819a
+PUT http://localhost:3001/api/persons/64c6297e6d3e3228f74fcbfc
 content-type: application/json
 
 {
-    "name": "test",
-    "number": "028"
+    "name": "1234",
+    "number": "1234"
 }

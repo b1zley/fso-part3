@@ -13,7 +13,7 @@ const Person = require('./models/person')
 
 app.use(cors())
 
-morgan.token('json-data', function (req, res) {
+morgan.token('json-data', function (req) {
     const toReturn = JSON.stringify(req.body)
     return toReturn
 })
@@ -23,7 +23,7 @@ app.use(express.json())
 
 
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms :json-data', {
-    skip: function (req, res) { return req.method !== 'POST' }
+    skip: function (req) { return req.method !== 'POST' }
 }))
 
 app.use(morgan('tiny'))
@@ -31,28 +31,7 @@ app.use(morgan('tiny'))
 app.use(express.static('build'))
 
 
-persons = [
-    {
-        "id": 1,
-        "name": "Arto Hellas",
-        "number": "040-123456"
-    },
-    {
-        "id": 2,
-        "name": "Ada Lovelace",
-        "number": "39-44-5323523"
-    },
-    {
-        "id": 3,
-        "name": "Dan Abramov",
-        "number": "12-43-234345"
-    },
-    {
-        "id": 4,
-        "name": "Mary Poppendieck",
-        "number": "39-23-6423122"
-    }
-]
+
 
 
 
@@ -81,14 +60,14 @@ app.get('/info', (request, response) => {
 
     Person.find({})
         .then(persons => {
-            numberEntriesInPhonebook = persons.length
+            let numberEntriesInPhonebook = persons.length
             toReturn =
                 `<div>Phonebook has info for ${numberEntriesInPhonebook} people</div>`
                 + `<div>${currentDate}</div> `
 
             response.send(toReturn)
 
-                
+
         })
 
 
@@ -184,7 +163,7 @@ app.put('/api/persons/:id', (request, response, next) => {
     }
 
 
-    Person.findByIdAndUpdate(request.params.id, person, { new: true })
+    Person.findByIdAndUpdate(request.params.id, person, { new: true, runValidators: true, context: 'query' })
         .then(updatedPerson => {
             response.json(updatedPerson)
         })
@@ -208,6 +187,9 @@ const errorHandler = (error, request, response, next) => {
     console.error(error.message)
     if (error.name === 'CastError') {
         return response.status(400).send({ error: 'malformatted id' })
+    }
+    if (error.name === 'ValidationError') {
+        return response.status(400).send({ error: error.message })
     }
 
     next(error)

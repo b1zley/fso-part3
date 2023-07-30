@@ -4,7 +4,12 @@ import NewNumberTracker from './NewNumberTracker'
 import { useState } from 'react'
 
 
-
+// const handleError = (props, error) => {
+//     props.setMessage(error.response.data.error)
+//     setTimeout(() => {
+//         props.setMessage(null)
+//     }, 5000)
+// }
 
 
 
@@ -59,18 +64,18 @@ const AddANewPerson = (props) => {
 
                 const handleUpdate = () => {
                     let indexToChange = props.persons
-                            .map(person => person.id)
-                            .indexOf(personToChangeId[0])
+                        .map(person => person.id)
+                        .indexOf(personToChangeId[0])
 
 
-                        const newArray = [...props.persons]
-                        newArray[indexToChange] = updatedPerson
+                    const newArray = [...props.persons]
+                    newArray[indexToChange] = updatedPerson
 
-                        console.log(newArray)
-                        props.setPersons(newArray)
-                        props.setPersonsToShow(newArray)
-                        setNewName('')
-                        setNewNumber('')
+                    console.log(newArray)
+                    props.setPersons(newArray)
+                    props.setPersonsToShow(newArray)
+                    setNewName('')
+                    setNewNumber('')
                 }
 
                 props.update(personToChangeId, updatedPerson)
@@ -91,31 +96,37 @@ const AddANewPerson = (props) => {
                         // setNewName('')
                         // setNewNumber('')
 
-                        props.setMessage(`Updated ${newName}`)
+                        props.setMessage({
+                            content: `Updated ${newName}`,
+                            isError: false
+                        })
                         setTimeout(() => {
                             props.setMessage(null)
                         }, 5000)
                         props.setToSearch('')
-                        
+
 
                     })
                     .catch(error => {
-                        props.setMessage(`Information of ${newName} already removed`)
+                        props.setMessage({
+                            content: error.response.data.error,
+                            isError: true
+                        })
                         setTimeout(() => {
                             props.setMessage(null)
                         }, 5000)
                         console.log(error)
-                        const updatedPersonsList = 
-                            props.persons
-                                .filter(person => person.id !==personToChangeId[0])
-                        props.setPersons(updatedPersonsList)
-                            
-                        props.setPersonsToShow(updatedPersonsList)
+                        // const updatedPersonsList =
+                        //     props.persons
+                        //         .filter(person => person.id !== personToChangeId[0])
+                        // props.setPersons(updatedPersonsList)
 
-                        setNewName('')
-                        setNewNumber('')
+                        // props.setPersonsToShow(updatedPersonsList)
+
+                        // setNewName('')
+                        // setNewNumber('')
                         props.setToSearch('')
-                            
+
                     })
 
 
@@ -176,11 +187,27 @@ const AddANewPerson = (props) => {
                     props.setToSearch('')
                     setNewName('')
                     setNewNumber('')
+                    props.setMessage({
+                        content: `Added ${newName}`,
+                        isError: false
+                    })
                 })
-            props.setMessage(`Added ${newName}`)
-            setTimeout(() => {
-                props.setMessage(null)
-            }, 5000)
+                .catch(error => {
+
+                    props.setMessage(
+                        {
+                            content: error.response.data.error,
+                            isError: true
+                        }
+                    )
+                    setTimeout(() => {
+                        props.setMessage(null)
+                    }, 5000)
+
+
+
+                })
+            
 
         }
     }
